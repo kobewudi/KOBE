@@ -1,0 +1,25 @@
+server:
+  port: 8090
+spring:
+    datasource:
+      username: root
+      password:
+      url: jdbc:mysql://localhost:3306/wuxingfei?useSSL=false&useUnicode=true&characterEncoding=utf8
+      driver-class-name: com.mysql.jdbc.Driver
+    thymeleaf:
+      mode: HTML5
+      encoding: UTF-8
+      prefix: classpath:/templates/
+#开发时关闭缓存,不然没法看到实时页面
+      cache: false
+      servlet:
+        content-type: text/html
+      suffix: .html
+    devtools:
+      restart:
+        enabled: true
+        additional-paths: src/main/java
+
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
+  type-aliases-package: com.wuxingfei.bean  # 注意：对应实体类的路径

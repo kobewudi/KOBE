@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>主页</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.12.1/bootstrap-table.min.css">
+
+</head>
+<body>
+
+
+<nav class="navbar navbar-default navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">首页</a>
+        </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li class="active"><span id="index-date"></span></li>
+                <li><a href="#">退出</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        更多
+                        <b class="caret"></b>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">jmeter</a></li>
+                        <li><a href="#">EJB</a></li>
+                        <li><a href="#">Jasper Report</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">分离的链接</a></li>
+                        <li class="divider"></li>
+                        <li><a href="#">另一个分离的链接</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-2">
+            <ul id="main-nav" class="nav nav-tabs nav-stacked" style="">
+                <li class="active">
+                    <a href="#">
+                        <i class="glyphicon glyphicon-th-large"></i>
+                       菜单栏
+                    </a>
+                </li>
+                <li>
+                    <a href="#systemSetting" class="nav-header collapsed" data-toggle="collapse">
+                        <i class="glyphicon glyphicon-cog"></i>
+                        系统管理
+                        <span class="pull-right glyphicon glyphicon-chevron-down"></span>
+                    </a>
+                    <ul id="systemSetting" class="nav nav-list collapse secondmenu" style="height: 0px;">
+                        <li><a href="mytask"><i class="glyphicon glyphicon-user"></i>用户管理</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-th-list"></i>菜单管理</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-asterisk"></i>角色管理</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-edit"></i>修改密码</a></li>
+                        <li><a href="#"><i class="glyphicon glyphicon-eye-open"></i>日志查看</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="./plans.html">
+                        <i class="glyphicon glyphicon-credit-card"></i>
+                        物料管理
+                    </a>
+                </li>
+                <li>
+                    <a href="./grid.html">
+                        <i class="glyphicon glyphicon-globe"></i>
+                        分发配置
+                        <span class="label label-warning pull-right">5</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="./charts.html">
+                        <i class="glyphicon glyphicon-calendar"></i>
+                        图表统计
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <i class="glyphicon glyphicon-fire"></i>
+                        关于系统
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-10">
+       <h1  style="background-color: skyblue">召唤师峡谷</h1>
+            <div class="panel panel-default">
+                <div class="panel-heading">查询条件</div>
+                <div class="panel-body">
+                    <form id="formSearch" class="form-horizontal">
+                        <div class="form-group" style="margin-top:15px">
+                            <div class="col-lg-6">
+                            <label class="control-label col-sm-1" for="search_user_userName">姓名</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" id="search_user_userName">
+                            </div>
+                            </div>
+                            <div class="col-lg-6 ">
+                            <label class="control-label col-sm-1" for="search_user_age">年龄</label>
+                            <div class="col-lg-3">
+                                <input type="text" class="form-control" id="search_user_age">
+                            </div>
+                            </div>
+                            <div class="col-lg-6 ">
+                                <p></p>
+                                <div class="col-sm-4" style="text-align:right;">
+                                <button type="button" style="margin-left:50px" id="btn_query" class="btn btn-primary">查询</button>
+                            </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <div id="toolbar" class="btn-group">
+                <button id="btn_user_add" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新增
+                </button>
+                <button type="button" onclick="userEditModalBtn()" class="btn btn-default">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>修改
+                </button>
+                <button id="btn_user_delete" type="button" class="btn btn-default">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>删除
+                </button>
+            </div>
+            <table id="table" >
+
+            </table>
+
+    </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog"  id="userEditModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">修改用户详情</h4>
+            </div>
+            <div class="modal-body">
+                <form   class="form-horizontal" id="user_edit_form">
+                    <div class="form-group">
+                        <label for="user_edit_userName" class="col-sm-2 control-label">用户名</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="user_edit_userName" name="userName" >
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <label for="user_edit_age" class="col-sm-2 control-label">年龄</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="user_edit_age" name="age" >
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary" >保存</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<script type="text/javascript" src="/js/jquery-2.1.1.js"></script>
+<script type="text/javascript" src="/js/bootstrap.js"></script>
+  <script type="text/javascript" src="/js/myjs/login.js"></script>
+<script type="text/javascript" src="/js/myjs/bootstrap-table.js"></script>
+
+<script type="text/javascript" src="/js/locale/bootstrap-table-zh-CN.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function (){
+        setInterval("CurrentTime()","1000");
+       initUserTable();
+       // testTable();
+    });
+</script>
+</body>
+</html>
