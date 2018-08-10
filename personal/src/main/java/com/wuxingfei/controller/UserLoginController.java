@@ -65,4 +65,12 @@ public  PageBean<User> findAllUserList(){
     return pageBean;
     }
 
+    //注册用户
+    @PostMapping("/register")
+    public  String register(User user){
+
+    logger.info(user.toString());
+        userService.insertUser(user);
+    return "index";
+    }
 }

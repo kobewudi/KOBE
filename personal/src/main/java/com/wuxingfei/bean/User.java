@@ -121,4 +121,20 @@ public class User {
         this.password = password;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", age=" + age +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", birthday=" + birthday +
+                ", nativePlace='" + nativePlace + '\'' +
+                ", phone='" + phone + '\'' +
+                ", job='" + job + '\'' +
+                ", isUse=" + isUse +
+                ", relation='" + relation + '\'' +
+                ", remark='" + remark + '\'' +
+                '}';
+    }
 }

@@ -25,6 +25,9 @@ SELECT * FROM  USER
         <if test="id !=null"   >AND id = #{id}</if>
         <if test="age !=null"   >AND age = #{age}</if>
     </select>
+    <insert id="insertUser"  parameterType="com.wuxingfei.bean.User" >
+        INSERT INTO  USER  (userName,password,phone) VALUES (#{userName},#{password},#{phone})
+    </insert>
 
 
 </mapper>
