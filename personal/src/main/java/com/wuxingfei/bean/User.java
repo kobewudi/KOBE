@@ -9,7 +9,7 @@ import java.util.Date;
 /**
  * Created by Administrator on 2018/7/29 0029.
  */
-public class User {
+public class User extends  BaseBean {
 
     private Integer id;//主键ID
 

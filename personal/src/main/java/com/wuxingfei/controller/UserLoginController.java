@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +33,9 @@ public class UserLoginController  {
     private UserService userService;
     private User currentUser;
 
-   @PostMapping("/index")
+   @PostMapping("/login")
    public String toMain(@RequestParam("userName") String userName ,
-                              @RequestParam("password") String password , ModelMap model) {
+                              @RequestParam("password") String password , ModelMap model,HttpSession session) {
        if (!StringUtils.isEmpty(userName) && null != password) {
            logger.info("正在验证登录身份信息。。");
            User user = new User();
@@ -44,25 +45,40 @@ public class UserLoginController  {
            if (currentUser != null) {
                logger.info("身份认证成功。");
                model.addAttribute("currentUser", currentUser);
-               return "login";
+               session.setAttribute("userSession",currentUser);
+               return "index";
            }
        }
-       return "index";
+       return "login";
    }
+ @PostMapping("/findAllUserList")
+    @ResponseBody
+public  PageBean<User> findAllUserList( Integer page , ModelMap modelMap){
 
-   @PostMapping("/findAllUserList")
-@ResponseBody
-public  PageBean<User> findAllUserList(){
-    List<User> list =  userService.findAllUserList();
+     Map<String,Object> params = new HashMap<String,Object>();
 
-       PageBean<User> pageBean = new PageBean<>();
-       User user =new User();
-       Long count  =  userService.countUser(user);
-     /*   int offset = 2;
-        int  limit =2;*/
-       pageBean.setRows(list);
-       pageBean.setTotal(2L);
-    return pageBean;
+     PageBean<User> pageBean = new PageBean<>();
+
+     if(page==null){
+         page=1;
+     }
+
+     int size = pageBean.getPageSize();
+     params.put("size",size);
+     int startRow = size*(page-1);
+     params.put("startRow",startRow);
+     Long count  =  userService.countUser(params);
+     pageBean.setPage(page);//当前页
+     pageBean.setRecords(count.intValue());
+     int total =( count.intValue()+size -1)/size;
+     pageBean.setTotal(total);//总页数
+     pageBean.setPageSize(size);
+     pageBean.setStartRow(startRow);
+     List<User> list =  userService.findAllUserList(params);
+     pageBean.setRecords(count.intValue());//总条数
+     pageBean.setRows(list);//实际数据
+     return pageBean;
+
     }
 
     //注册用户
@@ -71,6 +87,21 @@ public  PageBean<User> findAllUserList(){
 
     logger.info(user.toString());
         userService.insertUser(user);
-    return "index";
+    return "login";
+    }
+    @GetMapping("/index")
+    public  String  index(HttpSession session){
+        logger.info("即将进入主页面");
+        return "index";
+    }
+    @GetMapping("/toLogin")
+    public  String toLogin(){
+        return "login";
+    }
+
+    @GetMapping(value = "/userList")
+    public String userList(){
+        return "userList";
+
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018/7/28 0028.
@@ -35,8 +36,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllUserList() {
-        return userMapper.findAllUserList();
+    public List<User> findAllUserList(Map<String,Object> params) {
+        return userMapper.findAllUserList( params);
     }
 
     @Override
@@ -45,9 +46,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Long countUser(User user) {
+    public Long countUser(Map<String,Object> params) {
 
-        return userMapper.countUser(user);
+        return userMapper.countUser(params);
     }
 
 }
