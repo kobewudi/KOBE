@@ -15,20 +15,15 @@ SELECT * FROM  USER
 
 </select>
 
-    <select id="findAllUserList" parameterType="com.wuxingfei.bean.PageBean"  resultType="com.wuxingfei.bean.User">
+    <select id="findAllUserList" parameterType="java.util.Map"  resultType="com.wuxingfei.bean.User">
         SELECT * FROM  USER  WHERE  1=1 AND isUse = 1
-        <if test="limit !=null "   >
-            <if test="size !=null"   >
-                LIMIT ${startRow},${size }
-            </if>
-        </if>
+
+          LIMIT #{startRow},#{pageSize}
+
     </select>
     <select id="countUser"  parameterType="com.wuxingfei.bean.User"  resultType="Long">
         SELECT COUNT(*) FROM  USER  WHERE 1=1 and isUse =1
-        <if test="userName !=null"   >AND userName = #{userName}</if>
-        <if test="password !=null"   >AND password = #{password}</if>
-        <if test="id !=null"   >AND id = #{id}</if>
-        <if test="age !=null"   >AND age = #{age}</if>
+
 
     </select>
     <insert id="insertUser"  parameterType="com.wuxingfei.bean.User" >

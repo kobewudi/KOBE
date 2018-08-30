@@ -1,5 +1,6 @@
 package com.wuxingfei.service.serviceImpl;
 
+import com.wuxingfei.bean.PageBean;
 import com.wuxingfei.bean.User;
 import com.wuxingfei.dao.UserMapper;
 import com.wuxingfei.service.UserService;
@@ -37,7 +38,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> findAllUserList(Map<String,Object> params) {
-        return userMapper.findAllUserList( params);
+        return userMapper.findAllUserList(params);
     }
 
     @Override

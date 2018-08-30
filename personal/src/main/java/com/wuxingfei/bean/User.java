@@ -1,6 +1,8 @@
 package com.wuxingfei.bean;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.apache.ibatis.jdbc.Null;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -18,7 +20,7 @@ public class User extends  BaseBean {
     private  String userName;//用户名
 
     private  String password;//密码
-
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date birthday;//出生日期
 
     private String nativePlace ;//籍贯

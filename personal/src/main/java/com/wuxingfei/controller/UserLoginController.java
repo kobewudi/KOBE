@@ -53,31 +53,34 @@ public class UserLoginController  {
    }
  @PostMapping("/findAllUserList")
     @ResponseBody
-public  PageBean<User> findAllUserList( Integer page , ModelMap modelMap){
+public   Map<String,Object>  findAllUserList(@RequestParam("page") Integer pageNo , @RequestParam("rows") Integer oneRecord, ModelMap modelMap){
 
      Map<String,Object> params = new HashMap<String,Object>();
 
      PageBean<User> pageBean = new PageBean<>();
 
-     if(page==null){
-         page=1;
-     }
 
-     int size = pageBean.getPageSize();
-     params.put("size",size);
-     int startRow = size*(page-1);
-     params.put("startRow",startRow);
+     //pageNo 当前页
+     pageBean.setPageIndex(pageNo);
+     //count 查询记录总数
+     //oneRecord 一页显示几条数据
+     pageBean.setPageSize(oneRecord);//设置页面大小
      Long count  =  userService.countUser(params);
-     pageBean.setPage(page);//当前页
-     pageBean.setRecords(count.intValue());
-     int total =( count.intValue()+size -1)/size;
-     pageBean.setTotal(total);//总页数
-     pageBean.setPageSize(size);
-     pageBean.setStartRow(startRow);
+     pageBean.setRecordCount(count.intValue());
+     pageBean.initialize();//初始化计算起始下标
+     int startRow = (pageNo-1)*oneRecord;
+     params.put("startRow",startRow);
+     params.put("pageSize",oneRecord);
      List<User> list =  userService.findAllUserList(params);
-     pageBean.setRecords(count.intValue());//总条数
-     pageBean.setRows(list);//实际数据
-     return pageBean;
+     pageBean.setList(list);
+     params.put("rows", list);
+     //总记录数
+     params.put("records", count);
+     //总页数
+
+     params.put("total", pageBean.getPageCount());
+
+     return params;
 
     }
 
