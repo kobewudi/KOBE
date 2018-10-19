@@ -69,3 +69,27 @@ function initGridTable() {
     }
 
 }
+
+function userAddBtn() {
+
+    var  data =$("#user_add_form").serialize();
+
+    $.ajax({
+        url:"/user/userAdd",
+        type: "post",
+        data:data,
+
+        success:function (reslut) {
+            if(reslut=="success"){
+
+            $("#user_add_Modal").modal('hide')
+                alert( "新增成功！");
+            }else {
+                $("#user_add_Modal").modal('hide')
+                alert("操作失败！");
+
+            }
+        }
+    });
+
+}

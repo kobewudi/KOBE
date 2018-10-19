@@ -107,4 +107,12 @@ public   Map<String,Object>  findAllUserList(@RequestParam("page") Integer pageN
         return "userList";
 
     }
+    //增加用户
+    @PostMapping("/userAdd")
+    @ResponseBody
+     public String userAdd(User user ){
+        logger.info(user.toString());
+
+        return "success";
+     }
 }

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wuxingfei.dao.UserMapper">
+
+
+
+<select id="findUser" parameterType="com.wuxingfei.bean.User" resultType="com.wuxingfei.bean.User">
+SELECT * FROM  USER
+    WHERE 1=1 and isUse =1
+    <if test="userName !=null"   >AND userName = #{userName}</if>
+    <if test="password !=null"   >AND password = #{password}</if>
+    <if test="id !=null"   >AND id = #{id}</if>
+    <if test="age !=null"   >AND age = #{age}</if>
+
+</select>
+
+    <select id="findAllUserList"  resultType="com.wuxingfei.bean.User">
+        SELECT * FROM  USER  WHERE  1=1 AND isUse = 1
+    </select>
+    <select id="countUser"  parameterType="com.wuxingfei.bean.User"  resultType="Long">
+        SELECT COUNT(*) FROM  USER  WHERE 1=1 and isUse =1
+        <if test="userName !=null"   >AND userName = #{userName}</if>
+        <if test="password !=null"   >AND password = #{password}</if>
+        <if test="id !=null"   >AND id = #{id}</if>
+        <if test="age !=null"   >AND age = #{age}</if>
+    </select>
+
+
+</mapper>
+
